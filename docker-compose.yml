@@ -1,25 +1,26 @@
 ## This file is for local development only. It is not used in production. it is used to start the services locally.
 
 services:
-  db:
-    image: postgres
-    environment:
-      POSTGRES_PASSWORD: teamrocket
-      POSTGRES_USER: teamrocket
-      POSTGRES_DB: mattermost
+  postgres:
+    image: postgres:alpine3.17
+    container_name: postgres
     ports:
       - 5432:5432
-    volumes:
-      - ./appdata/db:/var/lib/postgresql/data
-
-  pgadmin:
-    image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.org
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - 5050:80
+      - POSTGRES_PASSWORD=mysecretpassword
     volumes:
-      - ./appdata/pgadmin:/var/lib/pgadmin
-    
+      - ./appdata/postgres:/var/lib/postgresql/data
+  
+
+  mattermost:
+    image: mattermost/mattermost-team-edition
+    container_name: mattermost
+    environment:
+      - MM_SERVICESETTINGS_SITEURL=http://localhost:8065
+      - MM_SQLSETTINGS_DATASOURCE=postgres://postgres:mysecretpassword@postgres:5432/postgres?sslmode=disable&connect_timeout=10
+
+    ports:
+      - 8065:8065
+    volumes:
+      - ./appdata/mattermost-data:/mattermost/data
 
