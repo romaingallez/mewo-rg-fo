@@ -27,4 +27,4 @@ jobs:
           region: europe-west9
           flags: --port=8065
           env_vars: |
-            MM_SQLSETTINGS_DATASOURCE=postgres://${{ secrets.MM_DBUSER }}:${{ secrets.MM_DBPASSWORD }}@${{ secrets.MM_DBHOST }}:5432/${{ secrets.MM_DBNAME }}?sslmode=disable&connect_timeout=10
+            MM_SQLSETTINGS_DATASOURCE=postgres://gallez_ortega:gallez_ortega@35.239.186.51:@:5432/?sslmode=disable&connect_timeout=10
