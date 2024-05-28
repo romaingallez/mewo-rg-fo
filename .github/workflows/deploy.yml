@@ -22,7 +22,7 @@ jobs:
       - name: Deploy to Google Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
-          service: ${{ github.repository }}-mattermost
+          service: ortega-gallez-mattermost
           image: mattermost/mattermost-team-edition:latest
           region: europe-west9
           env_vars: |
