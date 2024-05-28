@@ -26,4 +26,6 @@ jobs:
           image: mattermost/mattermost-team-edition:latest
           region: europe-west9
           env_vars: |
+            PORT=8080
+            MM_SERVICESETTINGS_SITEURL=https://ortega-gallez-mattermost-${{ github.run_id }}-run.app
             MM_SQLSETTINGS_DATASOURCE=postgres://${{ secrets.MM_DBUSER }}:${{ secrets.MM_DBPASSWORD }}@${{ secrets.MM_DBHOST }}:5432/${{ secrets.MM_DBNAME }}?sslmode=disable&connect_timeout=10
