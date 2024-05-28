@@ -19,12 +19,15 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCLOUD_AUTH }}
+      - name: Extract repository name
+        id: repo_name
+        run: echo "REPO_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
       - name: Deploy to Google Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
-          service: ${{ github.repository }}-mattermost
+          service: ${{ env.REPO_NAME }}-mattermost
           image: mattermost/mattermost-team-edition:latest
           region: europe-west9
           env_vars: |
-            MM_SERVICESETTINGS_SITEURL=https://${{ github.repository }}-mattermost-${{ github.run_id }}-run.app
+            MM_SERVICESETTINGS_SITEURL=https://${{ env.REPO_NAME }}-mattermost-${{ github.run_id }}-run.app
             MM_SQLSETTINGS_DATASOURCE=postgres://${{ secrets.MM_DBUSER }}:${{ secrets.MM_DBPASSWORD }}@${{ secrets.MM_DBHOST }}:5432/${{ secrets.MM_DBNAME }}?sslmode=disable&connect_timeout=10
